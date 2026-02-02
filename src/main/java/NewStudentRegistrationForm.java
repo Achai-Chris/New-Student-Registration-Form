@@ -190,7 +190,7 @@ public class NewStudentRegistrationForm extends Application {
             errors.append("Select gender\n");
 
         if (deptGroup.getSelectedToggle() == null)
-            errors.append("Select department\n");
+            errors.append("Select department\n");        
 
         if (errors.length() > 0) {
             alert("Validation Errors", errors.toString());
@@ -214,10 +214,10 @@ public class NewStudentRegistrationForm extends Application {
 
         String id = generateStudentId();
         String gender = ((RadioButton) genderGroup.getSelectedToggle()).getText();
-        String dept = ((RadioButton) deptGroup.getSelectedToggle()).getText();
+        String dept = ((RadioButton) deptGroup.getSelectedToggle()).getText();        
 
         String record = String.format(
-                "%s | %s %s | %s | %s | %s",
+                "%s | %s %s | %s | %s | %s | %s",
                 id, 
                 fn, 
                 ln, 
@@ -234,17 +234,14 @@ public class NewStudentRegistrationForm extends Application {
     //Student ID Generation
     private String generateStudentId() {
         int year = LocalDate.now().getYear();
-        int count = 0;
+        int count =1;
 
         try (BufferedReader br = new BufferedReader(new FileReader(CSV_FILE))) {
-           
-            String line;
-            while ((line = br.readLine()) != null) {
-                if (line.contains("ID: " + year + "-")){
-                    count++;
-                }
-            }
-        } catch (IOException ignored) {}
+            while (br.readLine() != null) {
+               count++;
+                 }
+        } 
+        catch (IOException ignored) {}
 
         return year + "-" + String.format("%05d", count);
     }
